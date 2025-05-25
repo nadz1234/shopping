@@ -1,37 +1,44 @@
 import { observer } from "mobx-react-lite";
 import { View,Text,FlatList,TextInput, TouchableOpacity, StyleSheet  } from "react-native";
-import { cartStore } from "../stores/cartStore";
+import { listStore } from "../stores/listStore";
 
 
-export const CartScreen = observer(()=>{
+export const ShoppingListScreen = observer(()=>{
 
   return (
     <View style={{ flex: 1, padding: 16 }}>
-      <Text style={styles.title}>Cart</Text>
+  
       <FlatList
-        data={cartStore.cart}
+        data={listStore.listItems}
         keyExtractor={(item) => item.id.toString()}
         ListEmptyComponent={<Text>No items here man..</Text>}
         renderItem={({ item }) => (
+              <TouchableOpacity
+          key={item.id}
+        
+          onPress={() => listStore.togglePurchased(item.id)}
+        >
           <View style={styles.itemContainer}>
             <Text>{item.title}</Text>
             <Text>R{item.price}</Text>
+            <Text>{item.purchased ? 'purchasd' : 'still there'}</Text>
             <TextInput
               style={styles.input}
               value={item.quantity.toString()}
               onChangeText={(text) => {
                 const qty = parseInt(text, 10);
-                cartStore.editCart(item.id,  qty);
+                listStore.editList(item.id,  qty);
               }}
               keyboardType="numeric"
             />
-            <TouchableOpacity onPress={() => cartStore.removeFromCart(item.id)}>
+            <TouchableOpacity onPress={() => listStore.removeFromList(item.id)}>
               <Text style={styles.remove}>Remove Item</Text>
             </TouchableOpacity>
           </View>
+          </TouchableOpacity>
         )}
       />
-      <Text style={styles.total}>Total: R{cartStore.totalPrice.toFixed(2)}</Text>
+      <Text style={styles.total}>Total: R{listStore.totalPrice.toFixed(2)}</Text>
     </View>
   );
 });
