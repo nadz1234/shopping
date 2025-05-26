@@ -1,3 +1,4 @@
+/// <reference types="nativewind/types" />
 import React from 'react';
 import { HomeScreen } from './pages/Home';
 import { QueryClient, QueryClientProvider} from '@tanstack/react-query';

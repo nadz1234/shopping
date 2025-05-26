@@ -73,6 +73,12 @@ class ListStore{
         this.save();
     }
   }
+    editListPurchased(prodId : number, purchased:boolean){
+    const item = this.listItems.find(item => item.id ===prodId);
+        item.purchased = purchased;
+        this.save();
+  
+  }
     clearList() {
     this.listItems = [];
   }
