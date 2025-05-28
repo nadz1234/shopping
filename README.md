@@ -9,6 +9,8 @@ Features
 3. You will also have the flexiblity to edit quantity , remove and also mark off as you buy them 
 4. You can also email your desired list to a friend.
 
+ I have used interesting technologies such as expo, Mobx, axios, react query and async storage to easily fetch and cache your data , and allows room for scalability.
+
 Screenshots below :
 
 Home Page :
