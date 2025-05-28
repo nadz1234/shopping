@@ -15,16 +15,20 @@ export const ProductItemCard = ({
   onPress,
 }: productItemCardProps) => {
   return (
-    <View style={styles.card}>
-      <Image source={{ uri: image }} style={styles.image} resizeMode="cover" />
+    <View style={styles.cardProdList}>
+      <Image
+        source={{ uri: image }}
+        style={styles.imageList}
+        resizeMode="cover"
+      />
 
       <View style={styles.content}>
-        <Text style={styles.title} numberOfLines={1}>
+        <Text style={styles.titleList} numberOfLines={1}>
           {title}
         </Text>
         <Text style={styles.price}>R {price.toFixed(2)}</Text>
-        <TouchableOpacity style={styles.button} onPress={onPress}>
-          <Text style={styles.buttonText}>Add to my list</Text>
+        <TouchableOpacity style={styles.buttonList} onPress={onPress}>
+          <Text style={styles.buttonTextList}>Add to my list</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -32,7 +36,7 @@ export const ProductItemCard = ({
 };
 
 const styles = StyleSheet.create({
-  card: {
+  cardProdList: {
     flexDirection: "row",
     backgroundColor: "#fff",
     borderRadius: 12,
@@ -46,7 +50,7 @@ const styles = StyleSheet.create({
     elevation: 2,
     alignItems: "center",
   },
-  image: {
+  imageList: {
     width: 100,
     height: 100,
     borderRadius: 8,
@@ -56,7 +60,7 @@ const styles = StyleSheet.create({
     marginLeft: 12,
     justifyContent: "center",
   },
-  title: {
+  titleList: {
     fontSize: 16,
     fontWeight: "bold",
     color: "#333",
@@ -67,14 +71,14 @@ const styles = StyleSheet.create({
     color: "#888",
     marginBottom: 8,
   },
-  button: {
+  buttonList: {
     backgroundColor: "#007bff",
     paddingVertical: 6,
     paddingHorizontal: 12,
     borderRadius: 6,
     alignSelf: "flex-start",
   },
-  buttonText: {
+  buttonTextList: {
     color: "#fff",
     fontWeight: "bold",
   },

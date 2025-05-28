@@ -12,7 +12,6 @@ export const CategoryCard = ({
   image,
   description,
   onPress,
-  activeCategory,
 }: categoryCardProps) => {
   return (
     <TouchableOpacity onPress={onPress}>

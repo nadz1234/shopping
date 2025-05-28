@@ -1,12 +1,5 @@
 import React, { useState } from "react";
-import { listStore } from "../stores/listStore";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  TextInput,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 type Props = {
   id: number;
@@ -19,7 +12,6 @@ type Props = {
 };
 
 export const MyListItem = ({
-  id,
   title,
   price,
   quantity,
@@ -27,10 +19,6 @@ export const MyListItem = ({
   onQuantityChange,
 }: Props) => {
   const [purchased, setPurchased] = useState(false);
-
-  /*const handleToggle = () => {
-    listStore.editListPurchased(id);
-  };*/
 
   return (
     <View style={[styles.card, purchased && styles.purchased]}>

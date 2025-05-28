@@ -1,0 +1,61 @@
+import { StyleSheet } from "react-native";
+
+export const styles = StyleSheet.create({
+  badge: {
+    position: "absolute",
+    top: -3,
+    right: -3,
+    backgroundColor: "red",
+    borderRadius: 10,
+    paddingHorizontal: 5,
+    paddingVertical: 1,
+    width: 25,
+    height: 25,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  badgeText: {
+    color: "#fff",
+    fontSize: 10,
+    fontWeight: "bold",
+  },
+  headerText: {
+    fontSize: 22,
+    fontWeight: "bold",
+    textAlign: "center",
+    marginTop: 18,
+    marginBottom: 18,
+  },
+  searchBox: {
+    padding: 12,
+    borderColor: "#ccc",
+    borderWidth: 1,
+    margin: 10,
+    borderRadius: 25,
+    backgroundColor: "#f9f9f9",
+  },
+  containerB: {
+    position: "absolute",
+    bottom: 20,
+    width: "100%",
+    paddingHorizontal: 20,
+  },
+  buttonB: {
+    backgroundColor: "#1e90ff",
+    height: 50,
+    paddingVertical: 16,
+    borderRadius: 12,
+    width: "100%",
+    alignItems: "center",
+    elevation: 4,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+    zIndex: 10,
+  },
+  buttonText: {
+    color: "#fff",
+    fontWeight: "bold",
+  },
+});
