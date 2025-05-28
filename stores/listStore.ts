@@ -12,85 +12,122 @@ class ListStore{
         // will load from async storage 
         this.load();
     }
+   searchQuery = "";
+
+setSearchQuery(query: string) {
+  this.searchQuery = query;
+}
+
+get filteredList() {
+  return this.listItems.filter(item =>
+    item.title.toLowerCase().includes(this.searchQuery.toLowerCase())
+  );
+}
+
     
 
     // this is the load function it chectks to see if we have a json obj saved on local storage 
-    async load() {
+   
+async load() {
+  try {
     const json = await AsyncStorage.getItem('shoppingList');
+    
     if (json) {
-      runInAction(() => {
-        this.listItems = JSON.parse(json);
-      });
+      const parsed = JSON.parse(json);
+      
+      if (Array.isArray(parsed)) {
+        runInAction(() => {
+          this.listItems = parsed;
+        });
+      } else {
+        console.warn('invalid data');
+      }
     }
+  } catch (error) {
+    console.error('Failed to load list:', error);
   }
+}
 
   // this saves your json item , and you call on save on your CRUD actions as you will see below 
-    async save() {
-    await AsyncStorage.setItem('shoppingList', JSON.stringify(this.listItems));
+ async save() {
+  try {
+    const json = JSON.stringify(this.listItems);
+    await AsyncStorage.setItem('shoppingList', json);
+  } catch (error) {
+    console.error('Failed to save list:', error);
   }
+}
 
 
   // this adds to your  listItems 
-  addToList(product:Product)
-  {
+addToList(product: Product) {
+  try {
+    const existingProduct = this.listItems.find(item => item.id === product.id);
 
-    // it checks if theres an existing product against the original list items thats present
-    const existinProduct = this.listItems.find(item => item.id === product.id);
-    if(existinProduct)
-    {
-      //if exists, just update the quantity 
-        existinProduct.quantity += 1;
-        //then save
-        this.save();
+    if (existingProduct) {
+      existingProduct.quantity += 1;
+    } else {
+      this.listItems.push({
+        ...product,
+        quantity: 1,
+        purchased: false,
+      });
     }
-    else 
-    {
-      // else it will create a new entry for the item
-        this.listItems.push({
-          ...product, quantity: 1,
-          purchased: false
-        });
-        this.save();
-    }
+
+    this.save();
+  } catch (error) {
+    console.error('Failed to add product to the list:', error);
   }
+}
 
 
   //this will remove an item from the list based on the id selected
-  removeFromList(prodId:number)
-  {
-     this.listItems = this.listItems.filter(item => item.id === prodId);
-     this.save();
+removeFromList(prodId: number) {
+  try {
+    this.listItems = this.listItems.filter(item => item.id !== prodId);
+    this.save();
+  } catch (error) {
+    console.error('Failed to remove item:', error);
   }
+}
 
 
   // you can edit the quantity value in your list
-  editList(prodId : number, quantity:number){
-    const item = this.listItems.find(item => item.id ===prodId);
+editList(prodId: number, quantity: number) {
+  try {
+    const item = this.listItems.find(item => item.id === prodId);
 
-    if(item && quantity > 0)
-    {
-        item.quantity = quantity;
-        this.save();
+    if (item && quantity > 0) {
+      item.quantity = quantity;
+      this.save();
+    } else if (!item) {
+      console.warn('Item not found in the list.');
+    } else {
+      console.warn('Invalid quantity. Must be greater than 0.');
     }
+  } catch (error) {
+    console.error('Error updating item quantity:', error);
   }
-    editListPurchased(prodId : number, purchased:boolean){
-    const item = this.listItems.find(item => item.id ===prodId);
-        item.purchased = purchased;
-        this.save();
-  
+}
+    editListPurchased(prodId: number) {
+  try {
+    const item = this.listItems.find(item => item.id === prodId);
+
+    if (item) {
+      item.purchased = true;
+      this.save();
+    } else {
+      console.warn('Item not found for marking as not purchased.');
+    }
+  } catch (error) {
+    console.error('Error updating purchased status:', error);
   }
+}
     clearList() {
     this.listItems = [];
   }
 
-  // this is to toggle between your purchase of the item , it will then set the bool value to true or false depending on your selection
-  togglePurchased(prodId: number) {
-    const item = this.listItems.find(item => item.id === prodId);
-    if (item) {
-      item.purchased = !item.purchased;
-      this.save();
-    }
-  }
+
 
   // this will return the number of items in the list which we will use on the ui 
 get itemCount()
