@@ -12,6 +12,7 @@ import { observer } from "mobx-react-lite";
 import { listStore } from "../stores/listStore";
 import { useNavigation } from "@react-navigation/native";
 import { CategoryCard } from "../components/CategoryCard";
+import { ImageCards } from "../components/ImageCards";
 import { ProductItemCard } from "../components/ProductItemCard";
 import { useProducts } from "../hooks/useFakeStoreQuery";
 import { ScrollView } from "react-native";
@@ -106,9 +107,10 @@ export const HomeScreen = observer(() => {
             ))}
           </>
         ) : (
-          <Text style={styles.headerText}>
-            Please select or search for item
-          </Text>
+          <>
+            <Text style={styles.headerText}>Some ideas</Text>
+            <ImageCards></ImageCards>
+          </>
         )}
       </ScrollView>
     </View>
